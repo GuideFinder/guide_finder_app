@@ -55,6 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       imageFile = _fileName;
     });
+
   }
 
   void _goToGuidesCreatePage(){
@@ -81,17 +82,19 @@ class _MyHomePageState extends State<MyHomePage> {
                     new Padding(
                       padding: new EdgeInsets.all(18.0),
                     ),
-                    imageFile == null ? new Text("Select a profile picture",textAlign: TextAlign.center,style: new TextStyle(
+                    new Text(imageFile == null ? "Select a profile picture": "Perfect!",textAlign: TextAlign.center,style: new TextStyle(
                         color: new Color.fromRGBO(105, 57, 82,1.0),
                         fontSize: 40.0,
                         fontFamily: 'Qanelas',
 
-                        fontStyle: FontStyle.normal),):
-                      new Image.file(imageFile,fit: BoxFit.scaleDown,),
+                        fontStyle: FontStyle.normal),),
+
                     new Padding(
                       padding: new EdgeInsets.all(18.0),
                     ),
+
                     new RaisedButton(
+
 
 
                       onPressed: getImage,
