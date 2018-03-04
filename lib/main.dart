@@ -59,10 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _goToGuidesPage() {
     final _guides = new Set<Guide>();
-    _guides.add(new Guide("Philippe Lam"));
-    _guides.add(new Guide("Isaac Patteau"));
-    _guides.add(new Guide("Emmanuel Proulx"));
-    _guides.add(new Guide("Sylvain Dégué"));
+    _guides.add(new Guide("Philippe Lam", "French", "Montreal", "Canada"));
+    _guides.add(new Guide("Isaac Patteau", "Japanese", "Kyoto", "Japan"));
+    _guides.add(new Guide("Emmanuel Proulx", "English", "Montreal", "Canada"));
+    _guides.add(new Guide("Sylvain Dégué", "English", "Montreal", "Canada"));
 
     Navigator.of(context).push(
       new MaterialPageRoute(
@@ -72,6 +72,9 @@ class _MyHomePageState extends State<MyHomePage> {
               return new ListTile(
                 title: new Text(
                   guide.name,
+                ),
+                subtitle: new Text(
+                  guide.city + ", " + guide.country + "\n" + guide.language
                 ),
                 /*leading: new CircleAvatar(
                   backgroundColor: Colors.greenAccent,
