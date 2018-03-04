@@ -50,23 +50,199 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   final TextEditingController _controller = new TextEditingController();
+  final TextEditingController _name = new TextEditingController();
+  final TextEditingController _city = new TextEditingController();
+  final TextEditingController _phone = new TextEditingController();
+  final TextEditingController _adress = new TextEditingController();
+  final TextEditingController _language = new TextEditingController();
   File imageFile;
 
   getImage() async {
     var _fileName = await ImagePicker.pickImage();
     setState(() {
       imageFile = _fileName;
+
     });
 
-  }
 
+  }
+  void _goToGuidesDescription(){
+    Navigator.of(context).push(
+      new MaterialPageRoute(builder: (context){
+        return new Scaffold(
+          resizeToAvoidBottomPadding: false,
+          appBar: new AppBar(
+            title: new Text('Describe yourself', style: new TextStyle(color: Colors.white),),
+            backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
+
+
+          ),
+          body: new Center(
+
+
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+
+                children: <Widget>[
+                  new Padding(
+                    padding: new EdgeInsets.all(18.0),
+                  ),
+                  imageFile != null ? new Image.file(imageFile,height: 200.0,fit: BoxFit.fitWidth) : new Padding(
+                     padding: new EdgeInsets.all(0.0),
+                   ),
+                  new Padding(
+                    padding: new EdgeInsets.all(18.0),
+                  ),
+                  new Flexible  (
+
+                    child: new TextField(
+                      style: new TextStyle(color:new Color.fromRGBO(105, 57, 82,1.0) ,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _name,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(
+                            color:new Color.fromRGBO(105, 57, 82,0.7) ,
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
+                        hintText: 'What is your name?',
+                      ),
+                    ),
+
+                  ),
+
+                  new Padding(
+                    padding: new EdgeInsets.all(5.0),
+                  ),
+                  new Flexible(
+
+                    child: new TextField(
+                      style: new TextStyle(color:new Color.fromRGBO(105, 57, 82,1.0) ,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _language ,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(
+                            color:new Color.fromRGBO(105, 57, 82,0.7) ,
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
+                        hintText: 'What language do you speak?',
+                      ),
+                    ),
+
+                  ),
+
+                  new Padding(
+                    padding: new EdgeInsets.all(5.0),
+                  ),
+                  new Flexible(
+
+                    child: new TextField(
+                      style: new TextStyle(color:new Color.fromRGBO(105, 57, 82,1.0) ,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _city,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(
+                            color:new Color.fromRGBO(105, 57, 82,0.7) ,
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
+                        hintText: 'In what city do you live?',
+                      ),
+                    ),
+
+                  ),
+
+
+
+                  new Padding(
+                    padding: new EdgeInsets.all(5.0),
+                  ),
+                  new Flexible(
+
+                    child: new TextField(
+                      style: new TextStyle(color:new Color.fromRGBO(105, 57, 82,1.0) ,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _phone,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(
+                            color:new Color.fromRGBO(105, 57, 82,0.7) ,
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
+                        hintText: 'What is your phone number?',
+                      ),
+                    ),
+
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.all(5.0),
+                  ),
+                  new Flexible(
+
+                    child: new TextField(
+                      style: new TextStyle(color:new Color.fromRGBO(105, 57, 82,1.0) ,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _adress,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(
+                            color:new Color.fromRGBO(105, 57, 82,0.7) ,
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
+                        hintText: 'What is your email adress?',
+                      ),
+                    ),
+
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.all(18.0),
+                  ),
+                  new RaisedButton(
+                    onPressed:  _buildMenu,
+                    child: const Icon(Icons.navigate_next, color: Colors.white,size: 20.0,),
+                    color: new Color.fromRGBO(105, 57, 82,1.0),
+                    shape: new StadiumBorder(),
+
+                  ),
+
+
+                ],
+              )
+          ),
+        );
+      }
+      )
+    );
+
+  }
   void _goToGuidesCreatePage(){
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
 
 
-          return new Scaffold(
+          return  new Scaffold(
             appBar: new AppBar(
               title: new Text('Create a Guide account', style: new TextStyle(color: Colors.white),),
               backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
@@ -95,25 +271,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: new EdgeInsets.all(18.0),
                     ),
 
-                    new RaisedButton(
+                    new Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[new RaisedButton(
+                        onPressed: getImage,
+                        child: const Icon(Icons.add_a_photo, color: Colors.white,size: 20.0,),
+                        color: new Color.fromRGBO(105, 57, 82,1.0),
+                        shape: new StadiumBorder(),
 
+                      ),
+                      new Padding(
+                        padding: new EdgeInsets.all(18.0),
+                      ),
+                      new RaisedButton(
+                        onPressed: _goToGuidesDescription,
+                        child: const Icon(Icons.navigate_next, color: Colors.white,size: 20.0,),
+                        color: new Color.fromRGBO(105, 57, 82,1.0),
+                        shape: new StadiumBorder(),
 
-
-                      onPressed: getImage,
-                      child: const Icon(Icons.add_a_photo, color: Colors.white,size: 20.0,),
-                      color: new Color.fromRGBO(105, 57, 82,1.0),
-                      shape: new StadiumBorder(),
-
-
+                      ),
+                    ],
                     ),
-
-
-
-
-
-
-
-
                   ],
                 )
             ),
@@ -225,7 +403,96 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+  void _buildMenu(){
+    Navigator.of(context).push(
+      new MaterialPageRoute(builder: (context){
+        return new Scaffold(
+          backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
+          body: new Center(
 
+
+              child: new Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+                children: <Widget>[
+
+                  new Padding(
+                    padding: new EdgeInsets.all(20.0),
+                  ),
+                  new Flexible(
+                    child: new Image.asset('graphics/Capture.png'),
+                  ),
+
+                  new Expanded(child:new Row(
+                    children: <Widget>[
+                      new Padding(
+                        padding: new EdgeInsets.all(8.0),
+                      ),
+
+
+                      new Expanded(
+
+                        child: new TextField(
+                          style: new TextStyle(color: Colors.white,
+                              fontSize: 20.0,
+                              fontFamily: 'Qanelas',
+                              fontWeight: FontWeight.w900),
+                          textAlign: TextAlign.left,
+                          controller: _controller,
+
+                          decoration: new InputDecoration(
+                            hintStyle: new TextStyle(
+                                color: Colors.white.withOpacity(0.7),
+                                fontSize: 20.0,
+                                fontFamily: 'Qanelas',
+                                fontStyle: FontStyle.normal),
+                            hintText: 'Type a location',
+                          ),
+                        ),
+
+                      ),
+                      new Padding(
+                        padding: new EdgeInsets.all(8.0),
+                      ),
+                      new RaisedButton(
+
+                        onPressed: _goToGuidesPage,
+                        child: const Icon(Icons.search),
+                        shape: new StadiumBorder(),
+                      ),
+                      new Padding(
+                        padding: new EdgeInsets.all(8.0),
+                      ),
+
+                    ],
+
+                  ),
+
+                  ),
+                  new Flexible(
+                    child: new RaisedButton(
+
+                      onPressed: _goToGuidesCreatePage,
+                      child: new Text("Be a guide", style: new TextStyle(color: Colors.white,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+
+                      ),
+                      color: new Color.fromRGBO(105, 57, 82,1.0),
+                      shape: new StadiumBorder(),
+
+                    ),
+                  ),
+
+                ],
+              )
+          ),
+
+        );
+      })
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
