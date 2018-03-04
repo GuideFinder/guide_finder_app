@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:guide_finder_app/guide.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:io';
 import 'package:guide_finder_app/contact_item.dart';
 import 'package:guide_finder_app/guide.dart';
 import 'CalendarScreen.dart';
 
+final ThemeData kIOSTheme = new ThemeData(
+  primarySwatch: Colors.orange,
+  primaryColor: Colors.grey[100],
+  primaryColorBrightness: Brightness.light,
+);
+
+final ThemeData kDefaultTheme = new ThemeData(
+  primarySwatch: Colors.amber,
+  accentColor: Colors.orangeAccent[400],
+);
+
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Flutter Demo',
-      theme: new ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or press Run > Flutter Hot Reload in IntelliJ). Notice that the
-        // counter didn't reset back to zero; the application is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      theme: defaultTargetPlatform == TargetPlatform.iOS //new
+          ? kIOSTheme //new
+          : kDefaultTheme,
+      home: new MyHomePage(title: 'TravelGuide'),
       routes: <String, WidgetBuilder> {
         '/CalendarScreen': (BuildContext context) => new CalendarScreen(),
-      }
     );
   }
 }
@@ -33,16 +41,8 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
+
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
@@ -50,17 +50,78 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final TextEditingController _controller = new TextEditingController();
+  File imageFile;
 
-  void _incrementCounter() {
+  getImage() async {
+    var _fileName = await ImagePicker.pickImage();
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      imageFile = _fileName;
     });
   }
+
+  void _goToGuidesCreatePage(){
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text('Create a Guide account', style: new TextStyle(color: Colors.white),),
+              backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
+
+
+            ),
+            backgroundColor: Colors.white,
+            body: new Center(
+
+
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: <Widget>[
+                    new Padding(
+                      padding: new EdgeInsets.all(18.0),
+                    ),
+                    imageFile == null ? new Text("Select a profile picture",textAlign: TextAlign.center,style: new TextStyle(
+                        color: new Color.fromRGBO(105, 57, 82,1.0),
+                        fontSize: 40.0,
+                        fontFamily: 'Qanelas',
+
+                        fontStyle: FontStyle.normal),):
+                      new Image.file(imageFile,fit: BoxFit.scaleDown,),
+                    new Padding(
+                      padding: new EdgeInsets.all(18.0),
+                    ),
+                    new RaisedButton(
+
+
+                      onPressed: getImage,
+                      child: const Icon(Icons.add_a_photo, color: Colors.white,size: 20.0,),
+                      color: new Color.fromRGBO(105, 57, 82,1.0),
+                      shape: new StadiumBorder(),
+
+
+                    ),
+
+
+
+
+
+
+
+
+                  ],
+                )
+            ),
+
+          );
+        },
+      ),
+    );
+  }
+
 
   void _goToGuidesPage() {
     final _guides = new Set<Guide>();
@@ -87,7 +148,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: new Text(str.substring(0, 1))
                 ),*/
                 leading: new CircleAvatar(
-                  backgroundImage: avatar,
+                  backgroundImage: new NetworkImage(
+                      "https://picsum.photos/100"),
                 ),
                 onTap: () {
                   _goToGuideDetailsPage(guide);
@@ -104,7 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return new Scaffold(
             appBar: new AppBar(
-              title: new Text('Guides Found'),
+              title: new Text('Guides found'),
+              backgroundColor: new Color.fromRGBO(105, 57, 82,1.0),
             ),
             body: new ListView(children: divided),
 
@@ -163,52 +226,92 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return new Scaffold(
-      appBar: new AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: new Text(widget.title),
-      ),
+      backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
       body: new Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: new Column(
-          // Column is also layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug paint" (press "p" in the console where you ran
-          // "flutter run", or select "Toggle Debug Paint" from the Flutter tool
-          // window in IntelliJ) to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new Text(
-              'You have pushed the button this many times:',
-            ),
-            new Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
+
+
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
+            children: <Widget>[
+
+              new Padding(
+                padding: new EdgeInsets.all(20.0),
+              ),
+              new Flexible(
+                child: new Image.asset('graphics/Capture.png'),
+              ),
+
+              new Expanded(child:new Row(
+                children: <Widget>[
+                  new Padding(
+                    padding: new EdgeInsets.all(8.0),
+                  ),
+
+
+                  new Expanded(
+
+                    child: new TextField(
+                      style: new TextStyle(color: Colors.white,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _controller,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(
+                            color: Colors.white.withOpacity(0.7),
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
+                        hintText: 'Type a location',
+                      ),
+                    ),
+
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.all(8.0),
+                  ),
+                  new RaisedButton(
+
+                    onPressed: _goToGuidesPage,
+                    child: const Icon(Icons.search),
+                    shape: new StadiumBorder(),
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.all(8.0),
+                  ),
+
+                ],
+
+              ),
+
+              ),
+              new Flexible(
+                child: new RaisedButton(
+
+                  onPressed: _goToGuidesCreatePage,
+                  child: new Text("Be a guide", style: new TextStyle(color: Colors.white,
+                      fontSize: 20.0,
+                      fontFamily: 'Qanelas',
+                      fontWeight: FontWeight.w900),
+
+                  ),
+                  color: new Color.fromRGBO(105, 57, 82,1.0),
+                  shape: new StadiumBorder(),
+
+                ),
+              ),
+
+            ],
+          )
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _goToGuidesPage,
-        tooltip: 'Increment',
-        child: new Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
     );
   }
+
 }
+
+
