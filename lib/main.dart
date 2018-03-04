@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:guide_finder_app/guide.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:async';
 import 'dart:io';
 import 'package:guide_finder_app/contact_item.dart';
-import 'package:guide_finder_app/guide.dart';
 import 'CalendarScreen.dart';
 
 final ThemeData kIOSTheme = new ThemeData(
@@ -32,8 +30,9 @@ class MyApp extends StatelessWidget {
           ? kIOSTheme //new
           : kDefaultTheme,
       home: new MyHomePage(title: 'TravelGuide'),
-      routes: <String, WidgetBuilder> {
-        '/CalendarScreen': (BuildContext context) => new CalendarScreen(),
+      routes: <String, WidgetBuilder>{
+        '/CalendarScreen': (BuildContext context) => new CalendarScreen()
+      }
     );
   }
 }
