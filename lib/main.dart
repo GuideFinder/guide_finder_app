@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   icon: Icons.phone,
                   lines: <String>[
                     guide.phoneNumber,
-                    'Phone number',
+                    'Phone Number',
                   ],
                 ),
                 new ContactItem(
