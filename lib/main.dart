@@ -17,6 +17,7 @@ final ThemeData kDefaultTheme = new ThemeData(
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
   final String title;
+
 
   @override
   _MyHomePageState createState() => new _MyHomePageState();
@@ -92,44 +94,62 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
     return new Scaffold(
       backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
       body: new Center(
 
-          child: new Row(
 
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
 
             children: <Widget>[
-              new Padding(
-                padding: new EdgeInsets.all(8.0),
-              ),
 
 
               new Expanded(
+                child: new Image.asset('graphics/Capture.png'),
+              ),
 
-                child: new TextField(
-                  style: new TextStyle(color: Colors.white, fontSize: 20.0),
-                  textAlign: TextAlign.left,
-                  controller: _controller,
-
-                  decoration: new InputDecoration(
-                    hintStyle: new TextStyle(color:Colors.white.withOpacity(0.7), fontSize: 20.0 ),
-                    hintText: 'Type a location',
+              new Flexible(child:
+              new Row(
+                children: <Widget>[
+                  new Padding(
+                    padding: new EdgeInsets.all(8.0),
                   ),
-                ),
+
+
+                  new Expanded(
+
+                    child: new TextField(
+                      style: new TextStyle(color: Colors.white, fontSize: 20.0, fontFamily: 'Qanelas', fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _controller,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(color:Colors.white.withOpacity(0.7), fontSize: 20.0,fontFamily: 'Qanelas', fontStyle: FontStyle.normal ),
+                        hintText: 'Type a location',
+                      ),
+                    ),
+
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.all(8.0),
+                  ),
+                  new RaisedButton(
+
+                    onPressed: _goToGuidesPage,
+                    child: const Icon(Icons.search),
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.all(8.0),
+                  ),
+
+                ],
 
               ),
-              new Padding(
-                padding: new EdgeInsets.all(8.0),
-              ),
-              new RaisedButton(
 
-                onPressed: _goToGuidesPage,
-                child: const Icon(Icons.search),
               ),
-              new Padding(
-                padding: new EdgeInsets.all(8.0),
-              ),
+
 
             ],
           )

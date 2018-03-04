@@ -19,7 +19,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
+  fonts:
+  - family: Qanelas
+    fonts:
+      - asset: fonts/Font1.ttf
+      - asset: fonts/Font2.ttf
+  assets:
+   - graphics/Capture.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
