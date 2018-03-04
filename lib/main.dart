@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guide_finder_app/contact_item.dart';
 import 'package:guide_finder_app/guide.dart';
 
 void main() => runApp(new MyApp());
@@ -59,16 +60,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _goToGuidesPage() {
     final _guides = new Set<Guide>();
-    _guides.add(new Guide("Philippe Lam", "French", "Montreal", "Canada"));
-    _guides.add(new Guide("Isaac Patteau", "Japanese", "Kyoto", "Japan"));
-    _guides.add(new Guide("Emmanuel Proulx", "English", "Montreal", "Canada"));
-    _guides.add(new Guide("Sylvain Dégué", "English", "Montreal", "Canada"));
+    _guides.add(new Guide("Philippe Lam", "French", "Montreal", "Canada", "5141231234", "pl@dfdsf.com"));
+    _guides.add(new Guide("Isaac Patteau", "Japanese", "Kyoto", "Japan", "5141231234", "df@dfdsf.com"));
+    _guides.add(new Guide("Emmanuel Proulx", "English", "Montreal", "Canada", "5141231234", "sdfl@dfdsf.com"));
+    _guides.add(new Guide("Sylvain Dégué", "English", "Montreal", "Canada", "5141231234", "dfd@dfdsf.com"));
 
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
           final tiles = _guides.map(
                 (guide) {
+                  NetworkImage avatar = new NetworkImage(guide.avatarUrl);
               return new ListTile(
                 title: new Text(
                   guide.name,
@@ -81,8 +83,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: new Text(str.substring(0, 1))
                 ),*/
                 leading: new CircleAvatar(
-                  backgroundImage: new NetworkImage("https://picsum.photos/100"),
+                  backgroundImage: avatar,
                 ),
+                onTap: () {
+                  _goToGuideDetailsPage(guide);
+                },
               );
             },
           );
@@ -95,10 +100,57 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return new Scaffold(
             appBar: new AppBar(
-              title: new Text('Guides found'),
+              title: new Text('Guides Found'),
             ),
             body: new ListView(children: divided),
 
+          );
+        },
+      ),
+    );
+  }
+
+  void _goToGuideDetailsPage(Guide guide) {
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text(guide.name),
+            ),
+            body: new Column(
+              children: <Widget>[
+                new ContactItem(
+                  icon: Icons.phone,
+                  lines: <String>[
+                    guide.phoneNumber,
+                    'Phone number',
+                  ],
+                ),
+                new ContactItem(
+                  icon: Icons.language,
+                  lines: <String>[
+                    guide.language,
+                    'Language',
+                  ],
+                ),
+                new ContactItem(
+                  icon: Icons.my_location,
+                  lines: <String>[
+                    guide.city + ", " + guide.country,
+                    'Location',
+                  ],
+                ),
+                new ContactItem(
+                  icon: Icons.email,
+                  lines: <String>[
+                    guide.emailAddress,
+                    'Email Address',
+                  ],
+                ),
+              ],
+            ),
           );
         },
       ),
