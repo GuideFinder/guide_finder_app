@@ -147,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return new Scaffold(
             appBar: new AppBar(
-              title: new Text('Guides found'),
+              title: new Text('Guides Found'),
               backgroundColor: new Color.fromRGBO(105, 57, 82,1.0),
             ),
             body: new ListView(children: divided),
@@ -167,14 +167,21 @@ class _MyHomePageState extends State<MyHomePage> {
             appBar: new AppBar(
               title: new Text(guide.name),
             ),
-            body: new Column(
+            body: new ListView(
+              padding: new EdgeInsets.all(8.0),
               children: <Widget>[
-                new Padding(
-                  padding: new EdgeInsets.all(16.0),
-                ),
                 new CircleAvatar(
                   backgroundImage: networkImage,
                   radius: 50.0,
+                ),
+                new Padding(
+                  padding: new EdgeInsets.only(bottom: 8.0),
+                ),
+                new ContactItem(
+                  lines: <String>[
+                    '',
+                    guide.introduction,
+                  ],
                 ),
                 new ContactItem(
                   icon: Icons.phone,
