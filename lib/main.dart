@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:guide_finder_app/guide.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:async';
+import 'dart:io';
+
 
 final ThemeData kIOSTheme = new ThemeData(
   primarySwatch: Colors.orange,
@@ -9,7 +13,7 @@ final ThemeData kIOSTheme = new ThemeData(
 );
 
 final ThemeData kDefaultTheme = new ThemeData(
-  primarySwatch: Colors.purple,
+  primarySwatch: Colors.amber,
   accentColor: Colors.orangeAccent[400],
 );
 
@@ -44,6 +48,76 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   final TextEditingController _controller = new TextEditingController();
+  File imageFile;
+
+  getImage() async {
+    var _fileName = await ImagePicker.pickImage();
+    setState(() {
+      imageFile = _fileName;
+    });
+  }
+
+  void _goToGuidesCreatePage(){
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text('Create a Guide account', style: new TextStyle(color: Colors.white),),
+              backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
+
+
+            ),
+            backgroundColor: Colors.white,
+            body: new Center(
+
+
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+
+                  children: <Widget>[
+                    new Padding(
+                      padding: new EdgeInsets.all(18.0),
+                    ),
+                    imageFile == null ? new Text("Select a profile picture",textAlign: TextAlign.center,style: new TextStyle(
+                        color: new Color.fromRGBO(105, 57, 82,1.0),
+                        fontSize: 40.0,
+                        fontFamily: 'Qanelas',
+
+                        fontStyle: FontStyle.normal),):
+                      new Image.file(imageFile,fit: BoxFit.scaleDown,),
+                    new Padding(
+                      padding: new EdgeInsets.all(18.0),
+                    ),
+                    new RaisedButton(
+
+
+                      onPressed: getImage,
+                      child: const Icon(Icons.add_a_photo, color: Colors.white,size: 20.0,),
+                      color: new Color.fromRGBO(105, 57, 82,1.0),
+                      shape: new StadiumBorder(),
+
+
+                    ),
+
+
+
+
+
+
+
+
+                  ],
+                )
+            ),
+
+          );
+        },
+      ),
+    );
+  }
 
 
   void _goToGuidesPage() {
@@ -83,6 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return new Scaffold(
             appBar: new AppBar(
               title: new Text('Guides found'),
+              backgroundColor: new Color.fromRGBO(105, 57, 82,1.0),
             ),
             body: new ListView(children: divided),
 
@@ -94,24 +169,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return new Scaffold(
       backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
       body: new Center(
 
 
           child: new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
             children: <Widget>[
 
-
-              new Expanded(
+              new Padding(
+                padding: new EdgeInsets.all(20.0),
+              ),
+              new Flexible(
                 child: new Image.asset('graphics/Capture.png'),
               ),
 
-              new Flexible(child:
-              new Row(
+              new Expanded(child:new Row(
                 children: <Widget>[
                   new Padding(
                     padding: new EdgeInsets.all(8.0),
@@ -121,12 +196,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   new Expanded(
 
                     child: new TextField(
-                      style: new TextStyle(color: Colors.white, fontSize: 20.0, fontFamily: 'Qanelas', fontWeight: FontWeight.w900),
+                      style: new TextStyle(color: Colors.white,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
                       textAlign: TextAlign.left,
                       controller: _controller,
 
                       decoration: new InputDecoration(
-                        hintStyle: new TextStyle(color:Colors.white.withOpacity(0.7), fontSize: 20.0,fontFamily: 'Qanelas', fontStyle: FontStyle.normal ),
+                        hintStyle: new TextStyle(
+                            color: Colors.white.withOpacity(0.7),
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
                         hintText: 'Type a location',
                       ),
                     ),
@@ -139,6 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     onPressed: _goToGuidesPage,
                     child: const Icon(Icons.search),
+                    shape: new StadiumBorder(),
                   ),
                   new Padding(
                     padding: new EdgeInsets.all(8.0),
@@ -149,7 +232,21 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               ),
+              new Flexible(
+                child: new RaisedButton(
 
+                  onPressed: _goToGuidesCreatePage,
+                  child: new Text("Be a guide", style: new TextStyle(color: Colors.white,
+                      fontSize: 20.0,
+                      fontFamily: 'Qanelas',
+                      fontWeight: FontWeight.w900),
+
+                  ),
+                  color: new Color.fromRGBO(105, 57, 82,1.0),
+                  shape: new StadiumBorder(),
+
+                ),
+              ),
 
             ],
           )
