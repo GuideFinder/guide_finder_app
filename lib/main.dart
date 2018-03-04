@@ -4,7 +4,9 @@ import 'package:guide_finder_app/guide.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
-
+import 'package:guide_finder_app/contact_item.dart';
+import 'package:guide_finder_app/guide.dart';
+import 'CalendarScreen.dart';
 
 final ThemeData kIOSTheme = new ThemeData(
   primarySwatch: Colors.orange,
@@ -16,7 +18,6 @@ final ThemeData kDefaultTheme = new ThemeData(
   primarySwatch: Colors.amber,
   accentColor: Colors.orangeAccent[400],
 );
-
 
 void main() => runApp(new MyApp());
 
@@ -31,6 +32,8 @@ class MyApp extends StatelessWidget {
           ? kIOSTheme //new
           : kDefaultTheme,
       home: new MyHomePage(title: 'TravelGuide'),
+      routes: <String, WidgetBuilder> {
+        '/CalendarScreen': (BuildContext context) => new CalendarScreen(),
     );
   }
 }
@@ -122,19 +125,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _goToGuidesPage() {
     final _guides = new Set<Guide>();
-    _guides.add(new Guide("Philippe Lam"));
-    _guides.add(new Guide("Isaac Patteau"));
-    _guides.add(new Guide("Emmanuel Proulx"));
-    _guides.add(new Guide("Sylvain Dégué"));
+    _guides.add(new Guide("Philippe Lam", "French", "Montreal", "Canada", "5141231234", "pl@dfdsf.com"));
+    _guides.add(new Guide("Isaac Patteau", "Japanese", "Kyoto", "Japan", "5141231234", "df@dfdsf.com"));
+    _guides.add(new Guide("Emmanuel Proulx", "English", "Montreal", "Canada", "5141231234", "sdfl@dfdsf.com"));
+    _guides.add(new Guide("Sylvain Dégué", "English", "Montreal", "Canada", "5141231234", "dfd@dfdsf.com"));
 
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
           final tiles = _guides.map(
                 (guide) {
+                  NetworkImage avatar = new NetworkImage(guide.avatarUrl);
               return new ListTile(
                 title: new Text(
                   guide.name,
+                ),
+                subtitle: new Text(
+                  guide.city + ", " + guide.country + "\n" + guide.language
                 ),
                 /*leading: new CircleAvatar(
                   backgroundColor: Colors.greenAccent,
@@ -144,6 +151,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   backgroundImage: new NetworkImage(
                       "https://picsum.photos/100"),
                 ),
+                onTap: () {
+                  _goToGuideDetailsPage(guide);
+                },
               );
             },
           );
@@ -161,6 +171,53 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             body: new ListView(children: divided),
 
+          );
+        },
+      ),
+    );
+  }
+
+  void _goToGuideDetailsPage(Guide guide) {
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text(guide.name),
+            ),
+            body: new Column(
+              children: <Widget>[
+                new ContactItem(
+                  icon: Icons.phone,
+                  lines: <String>[
+                    guide.phoneNumber,
+                    'Phone Number',
+                  ],
+                ),
+                new ContactItem(
+                  icon: Icons.language,
+                  lines: <String>[
+                    guide.language,
+                    'Language',
+                  ],
+                ),
+                new ContactItem(
+                  icon: Icons.my_location,
+                  lines: <String>[
+                    guide.city + ", " + guide.country,
+                    'Location',
+                  ],
+                ),
+                new ContactItem(
+                  icon: Icons.email,
+                  lines: <String>[
+                    guide.emailAddress,
+                    'Email Address',
+                  ],
+                ),
+              ],
+            ),
           );
         },
       ),
