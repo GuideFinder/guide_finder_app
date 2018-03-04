@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:guide_finder_app/guide.dart';
 
 void main() => runApp(new MyApp());
 
@@ -56,6 +57,51 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _goToGuidesPage() {
+    final _guides = new Set<Guide>();
+    _guides.add(new Guide("Philippe Lam"));
+    _guides.add(new Guide("Isaac Patteau"));
+    _guides.add(new Guide("Emmanuel Proulx"));
+    _guides.add(new Guide("Sylvain Dégué"));
+
+    Navigator.of(context).push(
+      new MaterialPageRoute(
+        builder: (context) {
+          final tiles = _guides.map(
+                (guide) {
+              return new ListTile(
+                title: new Text(
+                  guide.name,
+                ),
+                /*leading: new CircleAvatar(
+                  backgroundColor: Colors.greenAccent,
+                  child: new Text(str.substring(0, 1))
+                ),*/
+                leading: new CircleAvatar(
+                  backgroundImage: new NetworkImage("https://picsum.photos/100"),
+                ),
+              );
+            },
+          );
+          final divided = ListTile
+              .divideTiles(
+            context: context,
+            tiles: tiles,
+          )
+              .toList();
+
+          return new Scaffold(
+            appBar: new AppBar(
+              title: new Text('Guides found'),
+            ),
+            body: new ListView(children: divided),
+
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -100,7 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _goToGuidesPage,
         tooltip: 'Increment',
         child: new Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
