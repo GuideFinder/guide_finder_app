@@ -416,7 +416,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: new EdgeInsets.all(20.0),
                   ),
                   new Flexible(
-                    child: new Image.asset('graphics/Capture.png'),
+                    child: new Image.asset('graphics/Capture.PNG'),
                   ),
 
                   new Expanded(child:new Row(
