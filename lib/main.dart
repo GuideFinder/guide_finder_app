@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:guide_finder_app/contact_item.dart';
 import 'package:guide_finder_app/guide.dart';
+import 'CalendarScreen.dart';
 
 void main() => runApp(new MyApp());
 
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: new MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: <String, WidgetBuilder> {
+        '/CalendarScreen': (BuildContext context) => new CalendarScreen(),
+      }
     );
   }
 }
