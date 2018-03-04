@@ -121,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  NetworkImage networkImage;
 
   void _goToGuidesPage() {
     final _guides = new Set<Guide>();
@@ -134,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
           final tiles = _guides.map(
                 (guide) {
-                  NetworkImage avatar = new NetworkImage(guide.avatarUrl);
+                  networkImage = new NetworkImage(guide.avatarUrl);
               return new ListTile(
                 title: new Text(
                   guide.name,
@@ -142,13 +143,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 subtitle: new Text(
                   guide.city + ", " + guide.country + "\n" + guide.language
                 ),
-                /*leading: new CircleAvatar(
-                  backgroundColor: Colors.greenAccent,
-                  child: new Text(str.substring(0, 1))
-                ),*/
                 leading: new CircleAvatar(
-                  backgroundImage: new NetworkImage(
-                      "https://picsum.photos/100"),
+                  backgroundImage: networkImage,
                 ),
                 onTap: () {
                   _goToGuideDetailsPage(guide);
@@ -187,6 +183,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             body: new Column(
               children: <Widget>[
+                new Padding(
+                  padding: new EdgeInsets.all(16.0),
+                ),
+                new CircleAvatar(
+                  backgroundImage: networkImage,
+                  radius: 50.0,
+                ),
                 new ContactItem(
                   icon: Icons.phone,
                   lines: <String>[
@@ -239,7 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding: new EdgeInsets.all(20.0),
               ),
               new Flexible(
-                child: new Image.asset('graphics/Capture.png'),
+                child: new Image.asset('graphics/Capture.PNG'),
               ),
 
               new Expanded(child:new Row(
