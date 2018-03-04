@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:guide_finder_app/guide.dart';
+import 'package:guide_finder_app/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:guide_finder_app/contact_item.dart';
@@ -239,7 +240,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   ),
 
-
                 ],
               )
           ),
@@ -308,7 +308,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 )
             ),
-
           );
         },
       ),
@@ -364,6 +363,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _goToGuideDetailsPage(Guide guide) {
+
+    RaisedButton reserveBtn = new RaisedButton(
+      onPressed: _goToSignInPage,
+      child: new Text("RESERVE"),
+    );
+
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
@@ -416,6 +421,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     'Email Address',
                   ],
                 ),
+                reserveBtn,
               ],
             ),
           );
@@ -423,6 +429,68 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  void _goToSignInPage() {
+    Navigator.of(context).push(
+        new MaterialPageRoute(builder: (context) {
+          final formKey = new GlobalKey<FormState>();
+          User _user = new User();
+
+          return new Scaffold(
+            appBar: new AppBar(
+                title: new Text('Sign Up'),
+                backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0)
+            ),
+            body: new Container(
+              padding: const EdgeInsets.all(16.0),
+              child: new Column(
+                children: <Widget>[
+                  new TextFormField(
+                    decoration: new InputDecoration(
+                        labelText: 'Name'
+                    ),
+                    onSaved: (val) => _user.name = val,
+                  ),
+                  new TextFormField(
+                    decoration: new InputDecoration(labelText: 'Email Address'),
+                    validator: (val) =>
+                    !val.contains('@') ? 'Not a valid email address' : null,
+                    onSaved: (val) => _user.email = val,
+                  ),
+                  new TextFormField(
+                    decoration: new InputDecoration(labelText: 'Password'),
+                    validator: (val) =>
+                    val.length < 6 ? 'Password too short' : null,
+                    onSaved: (val) => _user.pw = val,
+                    obscureText: true,
+                  ),
+                  new Padding(
+                    padding: new EdgeInsets.all(8.0),
+                  ),
+                  new RaisedButton(
+                    onPressed: () {
+                      _submit(_user);
+                    },
+                    child: new Text('Login'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        })
+    );
+  }
+
+  void _submit(User user) {
+    _goToGuidesPage();
+    var alert = new AlertDialog(
+      title: new Text("Success!"),
+      content: new Text("Request sent!"),
+
+    );
+    showDialog(context: context, child: alert);
+  }
+
   void _buildGuideToMenu(){
     _guides.add(new Guide(_name.text,_language.text,_city.text,_country.text,_phone.text,_address.text, imageFile));
     Navigator.of(context).push(
