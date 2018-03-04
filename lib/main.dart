@@ -39,8 +39,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _name = new TextEditingController();
   final TextEditingController _city = new TextEditingController();
   final TextEditingController _phone = new TextEditingController();
-  final TextEditingController _adress = new TextEditingController();
+  final TextEditingController _address = new TextEditingController();
+  final TextEditingController _country = new TextEditingController();
   final TextEditingController _language = new TextEditingController();
+  final _guides = new Set<Guide>();
   File imageFile;
 
   getImage() async {
@@ -151,6 +153,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   ),
 
+                  new Padding(
+                    padding: new EdgeInsets.all(5.0),
+                  ),
+                  new Flexible(
+
+                    child: new TextField(
+                      style: new TextStyle(color:new Color.fromRGBO(105, 57, 82,1.0) ,
+                          fontSize: 20.0,
+                          fontFamily: 'Qanelas',
+                          fontWeight: FontWeight.w900),
+                      textAlign: TextAlign.left,
+                      controller: _country,
+
+                      decoration: new InputDecoration(
+                        hintStyle: new TextStyle(
+                            color:new Color.fromRGBO(105, 57, 82,0.7) ,
+                            fontSize: 20.0,
+                            fontFamily: 'Qanelas',
+                            fontStyle: FontStyle.normal),
+                        hintText: 'In what country do you live?',
+                      ),
+                    ),
+
+                  ),
+
 
 
                   new Padding(
@@ -188,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontFamily: 'Qanelas',
                           fontWeight: FontWeight.w900),
                       textAlign: TextAlign.left,
-                      controller: _adress,
+                      controller: _address,
 
                       decoration: new InputDecoration(
                         hintStyle: new TextStyle(
@@ -205,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: new EdgeInsets.all(18.0),
                   ),
                   new RaisedButton(
-                    onPressed:  _buildMenu,
+                    onPressed:  _buildGuideToMenu,
                     child: const Icon(Icons.navigate_next, color: Colors.white,size: 20.0,),
                     color: new Color.fromRGBO(105, 57, 82,1.0),
                     shape: new StadiumBorder(),
@@ -288,21 +315,18 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  NetworkImage networkImage;
+  FileImage memoryImage;
 
   void _goToGuidesPage() {
-    final _guides = new Set<Guide>();
-    _guides.add(new Guide("Philippe Lam", "French", "Montreal", "Canada", "5141231234", "pl@dfdsf.com"));
-    _guides.add(new Guide("Isaac Patteau", "Japanese", "Kyoto", "Japan", "5141231234", "df@dfdsf.com"));
-    _guides.add(new Guide("Emmanuel Proulx", "English", "Montreal", "Canada", "5141231234", "sdfl@dfdsf.com"));
-    _guides.add(new Guide("Sylvain Dégué", "English", "Montreal", "Canada", "5141231234", "dfd@dfdsf.com"));
+
 
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
           final tiles = _guides.map(
                 (guide) {
-                  networkImage = new NetworkImage(guide.avatarUrl);
+                  memoryImage = new FileImage(imageFile);
+
               return new ListTile(
                 title: new Text(
                   guide.name,
@@ -311,7 +335,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   guide.city + ", " + guide.country + "\n" + guide.language
                 ),
                 leading: new CircleAvatar(
-                  backgroundImage: networkImage,
+                  backgroundImage: memoryImage,
                 ),
                 onTap: () {
                   _goToGuideDetailsPage(guide);
@@ -352,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: new EdgeInsets.all(8.0),
               children: <Widget>[
                 new CircleAvatar(
-                  backgroundImage: networkImage,
+                  backgroundImage: memoryImage,
                   radius: 50.0,
                 ),
                 new Padding(
@@ -399,7 +423,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-  void _buildMenu(){
+  void _buildGuideToMenu(){
+    _guides.add(new Guide(_name.text,_language.text,_city.text,_country.text,_phone.text,_address.text, imageFile));
     Navigator.of(context).push(
       new MaterialPageRoute(builder: (context){
         return new Scaffold(
