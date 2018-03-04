@@ -44,12 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _language = new TextEditingController();
   final _guides = new Set<Guide>();
   File imageFile;
-
+  FileImage fileImage;
   getImage() async {
     var _fileName = await ImagePicker.pickImage();
     setState(() {
       imageFile = _fileName;
-
+      fileImage = new FileImage(imageFile);
     });
 
 
@@ -273,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     new Padding(
                       padding: new EdgeInsets.all(18.0),
                     ),
-                    new Text(imageFile == null ? "Select a profile picture": "Perfect!",textAlign: TextAlign.center,style: new TextStyle(
+                    new Text("Select a profile picture",textAlign: TextAlign.center,style: new TextStyle(
                         color: new Color.fromRGBO(105, 57, 82,1.0),
                         fontSize: 40.0,
                         fontFamily: 'Qanelas',
@@ -325,24 +325,31 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
           final tiles = _guides.map(
                 (guide) {
-                  memoryImage = new FileImage(guide.imageFile);
+                  memoryImage =  guide.imageFile;
+                  if(guide.country.toLowerCase().contains(_controller.text.toLowerCase())){
+                    return new ListTile(
+                      title: new Text(
+                        guide.name,
+                      ),
+                      subtitle: new Text(
+                          guide.city + ", " + guide.country + "\n" + guide.language
+                      ),
+                      leading: new CircleAvatar(
+                        backgroundImage: memoryImage,
+                      ),
+                      onTap: () {
+                        _goToGuideDetailsPage(guide);
+                      },
+                    );
+                  }else{
+                    return new ListTile(enabled: false,);
+                  }
 
-              return new ListTile(
-                title: new Text(
-                  guide.name,
-                ),
-                subtitle: new Text(
-                  guide.city + ", " + guide.country + "\n" + guide.language
-                ),
-                leading: new CircleAvatar(
-                  backgroundImage: memoryImage,
-                ),
-                onTap: () {
-                  _goToGuideDetailsPage(guide);
-                },
-              );
+
+
             },
           );
+
           final divided = ListTile
               .divideTiles(
             context: context,
@@ -424,7 +431,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   void _buildGuideToMenu(){
-    _guides.add(new Guide(_name.text,_language.text,_city.text,_country.text,_phone.text,_address.text, imageFile));
+    _guides.add(new Guide(_name.text,_language.text,_city.text,_country.text,_phone.text,_address.text, fileImage));
     Navigator.of(context).push(
       new MaterialPageRoute(builder: (context){
         return new Scaffold(
