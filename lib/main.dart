@@ -367,7 +367,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (context) {
-
+          memoryImage = new FileImage(guide.imageFile);
           return new Scaffold(
             appBar: new AppBar(
               title: new Text(guide.name),
