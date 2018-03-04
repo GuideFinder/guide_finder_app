@@ -325,7 +325,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) {
           final tiles = _guides.map(
                 (guide) {
-                  memoryImage = new FileImage(imageFile);
+                  memoryImage = new FileImage(guide.imageFile);
 
               return new ListTile(
                 title: new Text(
