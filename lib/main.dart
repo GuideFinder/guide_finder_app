@@ -6,17 +6,6 @@ import 'dart:io';
 import 'package:guide_finder_app/contact_item.dart';
 import 'CalendarScreen.dart';
 
-final ThemeData kIOSTheme = new ThemeData(
-  primarySwatch: Colors.orange,
-  primaryColor: Colors.grey[100],
-  primaryColorBrightness: Brightness.light,
-);
-
-final ThemeData kDefaultTheme = new ThemeData(
-  primarySwatch: Colors.amber,
-  accentColor: Colors.orangeAccent[400],
-);
-
 void main() => runApp(new MyApp());
 
 class MyApp extends StatelessWidget {
@@ -26,9 +15,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Flutter Demo',
-      theme: defaultTargetPlatform == TargetPlatform.iOS //new
-          ? kIOSTheme //new
-          : kDefaultTheme,
       home: new MyHomePage(title: 'TravelGuide'),
       routes: <String, WidgetBuilder>{
         '/CalendarScreen': (BuildContext context) => new CalendarScreen()
