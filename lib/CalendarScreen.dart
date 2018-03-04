@@ -18,7 +18,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
       dateTime = new DateTime.now();
     }
 
-    monthPicker = new MonthPicker(selectedDate: dateTime, onChanged: _test, firstDate: currentTime, lastDate: new DateTime(currentTime.year, 12, 31, 0, 0, 0));
+    monthPicker = new MonthPicker(selectedDate: dateTime, onChanged: updateDate, firstDate: currentTime, lastDate: new DateTime(currentTime.year, 12, 31, 0, 0, 0));
 
     return new Scaffold(
       appBar: new AppBar(
@@ -45,7 +45,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   }
 
-  void _test(DateTime time) {
+  void updateDate(DateTime time) {
     setState(() {
       dateTime = time;
     });
