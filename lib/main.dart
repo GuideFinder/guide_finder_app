@@ -257,7 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return  new Scaffold(
             appBar: new AppBar(
-              title: new Text('Create a Guide account', style: new TextStyle(color: Colors.white),),
+              title: new Text('Create a Guide Account', style: new TextStyle(color: Colors.white),),
               backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
 
 
@@ -352,10 +352,9 @@ class _MyHomePageState extends State<MyHomePage> {
           return new Scaffold(
             appBar: new AppBar(
               title: new Text('Guides Found'),
-              backgroundColor: new Color.fromRGBO(105, 57, 82,1.0),
+              backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
             ),
             body: new ListView(children: divided),
-
           );
         },
       ),
@@ -376,6 +375,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return new Scaffold(
             appBar: new AppBar(
               title: new Text(guide.name),
+              backgroundColor: new Color.fromRGBO(76, 204, 136, 1.0),
             ),
             body: new ListView(
               padding: new EdgeInsets.all(8.0),
@@ -666,10 +666,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           )
       ),
-
     );
   }
-
 }
 
 
