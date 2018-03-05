@@ -10,6 +10,12 @@
 3. Open it in Android Studio/Xcode
 4. Enjoy!
 
+## Possible features to consider
+
+1. Add a calendar for departure/return periods
+2. Add filters (Languages, traveller type, etc...)
+3. Etc...
+
 The following below is optional but might be useful for understanding the work behind.
 
 ## Inner working
